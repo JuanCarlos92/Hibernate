@@ -1,17 +1,23 @@
 package org.example.menu;
 
+/**
+ * Esta enumeración representa las diferentes opciones de un menú principal.
+ * Cada opción se identifica por un código (entero) y una descripción (String).
+ */
 public enum EnumMenuDepartamentos {
     CREAR_DEPARTAMENTO(1, "Crear Departamento"),
     CONSULTAR_ID_DEPARTAMENTO(2, "Consultar Departamento (por ID)"),
     CONSULTAR_DEPARTAMENTOS(2, "Consultar todos los Departamentos"),
-    ACTUALIZAR_DEPARTAMENTO(3, "Actualizar Departamento (por ID)"),
-    ELIMINAR_DEPARTAMENTO(4, "Eliminar Departamento (por ID)"),
-    MOSTRAR_EMPLEADOS_DEPARTAMENTO(5, "Mostrar todos los empleados asignadas a un Departamento en un Empresa"),
-    VOLVER(6, "Volver al Menú Principal");
+    CONSULTAR_DEPARTAMENTO_DE_EMPRESA(3,"Consultar Departamento de Empresas"),
+    ACTUALIZAR_DEPARTAMENTO(4, "Actualizar Departamento (por ID)"),
+    ELIMINAR_DEPARTAMENTO(5, "Eliminar Departamento (por ID)"),
+    MOSTRAR_EMPLEADOS_ASIG_DEPARTAMENTO_DE_EMPRESA(6, "Mostrar todos los empleados asignadas a un Departamento en un Empresa"),
+    VOLVER(7, "Volver al Menú Principal");
 
     private final int codigo;
     private final String descripcion;
 
+    //Constructor de la enumeración. Asigna el código y descripción a la opción.
     EnumMenuDepartamentos(int codigo, String descripcion) {
         this.codigo = codigo;
         this.descripcion = descripcion;
@@ -25,6 +31,10 @@ public enum EnumMenuDepartamentos {
         return descripcion;
     }
 
+    /**
+     * Retorna la opción del menú departamento correspondiente al código proporcionado.
+     * Si no existe ninguna coincidencia, retorna null.
+     */
     public static EnumMenuDepartamentos obtenerPorCodigo(int codigo) {
         for (EnumMenuDepartamentos opcion : values()) {
             if (opcion.getCodigo() == codigo) {
@@ -34,6 +44,9 @@ public enum EnumMenuDepartamentos {
         return null;
     }
 
+    /**
+     * Muestra por consola todas las opciones del menú departamento con su código y descripción.
+     */
     public static void mostrarOpcionesMenu() {
         System.out.println("--- MENÚ DE DEPARTAMENTOS ---");
         for (EnumMenuDepartamentos opcion : EnumMenuDepartamentos.values()) {

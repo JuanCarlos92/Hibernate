@@ -3,6 +3,11 @@ package org.example.menu;
 import java.util.Scanner;
 
 public class Menu {
+
+    /**
+     * Inicia la ejecución del menú principal. Muestra las opciones disponibles
+     * y delega el control a submenús según la selección del usuario.
+     **/
     public void iniciar() {
         Scanner sc = new Scanner(System.in);
         boolean salir = false;
@@ -35,12 +40,20 @@ public class Menu {
         sc.close();
     }
 
+    /**
+     * Solicita al usuario que seleccione una opción del menú principal y valida
+     * que sea un valor numérico asociado a la enumeración {@link EnumMenuPrincipal}.
+     */
     private EnumMenuPrincipal validarOpcionPrincipal(Scanner sc) {
         System.out.print("Selecciona una opción: ");
         int codigo = leerEntero(sc);
         return EnumMenuPrincipal.obtenerPorCodigo(codigo);
     }
 
+    /**
+     * Administra la lógica del submenú de empresas. Muestra las opciones asociadas
+     * a la enumeración {@link EnumMenuEmpresas} y procesa la selección del usuario.
+     */
     private void gestionarEmpresas(Scanner sc) {
         boolean volver = false;
         while (!volver) {
@@ -68,8 +81,8 @@ public class Menu {
                 case ELIMINAR_EMPRESA:
                     // Lógica eliminar empresa por id
                     break;
-                case MOSTRAR_DEPARTAMENTOS_Y_EMPLEADOS:
-                    // Lógica mostrar departamentos y empleados de la empresa
+                case MOSTRAR_DEPARTAMENTOS_DE_EMPRESA_Y_EMPLEADOS:
+                    // Lógica mostrar departamentos de una empresa y sus empleados
                     break;
                 case VOLVER:
                     volver = true;
@@ -78,12 +91,20 @@ public class Menu {
         }
     }
 
+    /**
+     * Solicita al usuario que seleccione una opción del submenú de empresas y valida
+     * que sea un valor numérico asociado a la enumeración {@link EnumMenuEmpresas}.
+     */
     private EnumMenuEmpresas validarOpcionEmpresas(Scanner sc) {
         System.out.print("Selecciona una opción: ");
         int codigo = leerEntero(sc);
         return EnumMenuEmpresas.obtenerPorCodigo(codigo);
     }
 
+    /**
+     * Administra la lógica del submenú de departamentos. Muestra las opciones asociadas
+     * a la enumeración {@link EnumMenuDepartamentos} y procesa la selección del usuario.
+     */
     private void gestionarDepartamentos(Scanner sc) {
         boolean volver = false;
         while (!volver) {
@@ -105,14 +126,17 @@ public class Menu {
                 case CONSULTAR_DEPARTAMENTOS:
                     // Lógica leer departamentos
                     break;
+                case CONSULTAR_DEPARTAMENTO_DE_EMPRESA:
+                    // Lógica leer departamentos
+                    break;
                 case ACTUALIZAR_DEPARTAMENTO:
                     // Lógica actualizar departamento por id
                     break;
                 case ELIMINAR_DEPARTAMENTO:
                     // Lógica eliminar departamento por id
                     break;
-                case MOSTRAR_EMPLEADOS_DEPARTAMENTO:
-                    // Lógica mostrar empleados del departamento en una empresa
+                case MOSTRAR_EMPLEADOS_ASIG_DEPARTAMENTO_DE_EMPRESA:
+                    // Lógica mostrar empleados asignado a un departamento de una empresa
                     break;
                 case VOLVER:
                     volver = true;
@@ -121,12 +145,20 @@ public class Menu {
         }
     }
 
+    /**
+     * Solicita al usuario que seleccione una opción del submenú de departamentos y valida
+     * que sea un valor numérico asociado a la enumeración {@link EnumMenuDepartamentos}.
+     */
     private EnumMenuDepartamentos validarOpcionDepartamentos(Scanner sc) {
         System.out.print("Selecciona una opción: ");
         int codigo = leerEntero(sc);
         return EnumMenuDepartamentos.obtenerPorCodigo(codigo);
     }
 
+    /**
+     * Administra la lógica del submenú de empleados. Muestra las opciones asociadas
+     * a la enumeración {@link EnumMenuEmpleados} y procesa la selección del usuario.
+     */
     private void gestionarEmpleados(Scanner sc) {
         boolean volver = false;
         while (!volver) {
@@ -148,6 +180,9 @@ public class Menu {
                 case CONSULTAR_EMPLEADOS:
                     // Lógica leer empleados
                     break;
+                case CONSULTAR_EMPLEADO_DE_DEPARTAMENTO:
+                    // Lógica leer empleados
+                    break;
                 case ACTUALIZAR_EMPLEADO:
                     // Lógica actualizar empleado por id
                     break;
@@ -161,12 +196,20 @@ public class Menu {
         }
     }
 
+    /**
+     * Solicita al usuario que seleccione una opción del submenú de empleados y valida
+     * que sea un valor numérico asociado a la enumeración {@link EnumMenuEmpleados}.
+     */
     private EnumMenuEmpleados validarOpcionEmpleados(Scanner sc) {
         System.out.print("Selecciona una opción: ");
         int codigo = leerEntero(sc);
         return EnumMenuEmpleados.obtenerPorCodigo(codigo);
     }
 
+    /**
+     * Lee un valor entero introducido por el usuario mediante el objeto {@code Scanner}.
+     * Si la entrada no es un número entero válido, solicita nuevamente al usuario que introduzca un valor correcto.
+     */
     private int leerEntero(Scanner sc) {
         while (!sc.hasNextInt()) {
             System.out.println("Ingrese un número válido:");

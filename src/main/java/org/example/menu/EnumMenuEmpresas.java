@@ -1,17 +1,22 @@
 package org.example.menu;
 
+/**
+ * Esta enumeración representa las diferentes opciones de un menú principal.
+ * Cada opción se identifica por un código (entero) y una descripción (String).
+ */
 public enum EnumMenuEmpresas {
     CREAR_EMPRESA(1, "Crear Empresa"),
     CONSULTAR_ID_EMPRESA(2, "Consultar Empresa (por ID)"),
     CONSULTAR_EMPRESAS(2, "Consultar todas las Empresas"),
     ACTUALIZAR_EMPRESA(3, "Actualizar empresa (por ID)"),
     ELIMINAR_EMPRESA(4, "Eliminar empresa (por ID)"),
-    MOSTRAR_DEPARTAMENTOS_Y_EMPLEADOS(5, "Mostrar todos los Departamentos de una Empresa y sus Empleados"),
+    MOSTRAR_DEPARTAMENTOS_DE_EMPRESA_Y_EMPLEADOS(5, "Mostrar todos los Departamentos de una Empresa y sus Empleados"),
     VOLVER(6, "Volver al Menú Principal");
 
     private final int codigo;
     private final String descripcion;
 
+    //Constructor de la enumeración. Asigna el código y descripción a la opción.
     EnumMenuEmpresas(int codigo, String descripcion) {
         this.codigo = codigo;
         this.descripcion = descripcion;
@@ -25,6 +30,10 @@ public enum EnumMenuEmpresas {
         return descripcion;
     }
 
+    /**
+     * Retorna la opción del menú empresas correspondiente al código proporcionado.
+     * Si no existe ninguna coincidencia, retorna null.
+     */
     public static EnumMenuEmpresas obtenerPorCodigo(int codigo) {
         for (EnumMenuEmpresas opcion : values()) {
             if (opcion.getCodigo() == codigo) {
@@ -34,6 +43,9 @@ public enum EnumMenuEmpresas {
         return null;
     }
 
+    /**
+     * Muestra por consola todas las opciones del menú empresas con su código y descripción.
+     */
     public static void mostrarOpcionesMenu() {
         System.out.println("--- MENÚ DE EMPRESAS ---");
         for (EnumMenuEmpresas opcion : EnumMenuEmpresas.values()) {
