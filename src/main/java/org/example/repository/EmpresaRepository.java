@@ -15,6 +15,8 @@ public class EmpresaRepository {
     public EmpresaRepository() {
         FACTORY = new Configuration().configure("hibernate.cfg.xml")
                 .addAnnotatedClass(Empresa.class)
+                .addAnnotatedClass(Departamento.class)
+                .addAnnotatedClass(Empleado.class)
                 .buildSessionFactory();
     }
 

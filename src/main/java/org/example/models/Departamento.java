@@ -16,7 +16,7 @@ public class Departamento {
     @JoinColumn(name = "empresa_id")
     private Empresa empresa;
 
-    @OneToMany(mappedBy = "Empleado", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "departamento", cascade = CascadeType.ALL)
     private List<Empleado> empleados;
 
     public Departamento() {

@@ -7,11 +7,11 @@ package org.example.menu;
 public enum EnumMenuEmpresas {
     CREAR_EMPRESA(1, "Crear Empresa"),
     CONSULTAR_ID_EMPRESA(2, "Consultar Empresa (por ID)"),
-    CONSULTAR_EMPRESAS(2, "Consultar todas las Empresas"),
-    ACTUALIZAR_EMPRESA(3, "Actualizar empresa (por ID)"),
-    ELIMINAR_EMPRESA(4, "Eliminar empresa (por ID)"),
-    MOSTRAR_DEPARTAMENTOS_DE_EMPRESA_Y_EMPLEADOS(5, "Mostrar todos los Departamentos de una Empresa y sus Empleados"),
-    VOLVER(6, "Volver al Menú Principal");
+    CONSULTAR_EMPRESAS(3, "Consultar todas las Empresas"),
+    ACTUALIZAR_EMPRESA(4, "Actualizar empresa (por ID)"),
+    ELIMINAR_EMPRESA(5, "Eliminar empresa (por ID)"),
+    MOSTRAR_DEPARTAMENTOS_DE_EMPRESA_Y_EMPLEADOS(6, "Mostrar todos los Departamentos de una Empresa y sus Empleados"),
+    VOLVER(7, "Volver al Menú Principal");
 
     private final int codigo;
     private final String descripcion;

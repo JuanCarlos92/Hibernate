@@ -1,6 +1,8 @@
 package org.example.repository;
 
+import org.example.models.Departamento;
 import org.example.models.Empleado;
+import org.example.models.Empresa;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -14,6 +16,8 @@ public class EmpleadoRepository {
     //Constructor que inicializa la la configuración de Hibernate.
     public EmpleadoRepository() {
         FACTORY = new Configuration().configure("hibernate.cfg.xml")
+                .addAnnotatedClass(Empresa.class)
+                .addAnnotatedClass(Departamento.class)
                 .addAnnotatedClass(Empleado.class)
                 .buildSessionFactory();
     }
