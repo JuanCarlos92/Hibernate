@@ -32,10 +32,10 @@ public class Menu {
                     gestionarEmpresas(sc, empresaService);
                     break;
                 case GESTIONAR_DEPARTAMENTOS:
-                    gestionarDepartamentos(sc, departamentoService);
+                    gestionarDepartamentos(sc, departamentoService, empresaService);
                     break;
                 case GESTIONAR_EMPLEADOS:
-                    gestionarEmpleados(sc, empleadoService);
+                    gestionarEmpleados(sc, empleadoService, departamentoService);
                     break;
                 case SALIR:
                     salir = true;
@@ -79,12 +79,15 @@ public class Menu {
                     empresaService.readAllEmpresas();
                     break;
                 case ACTUALIZAR_EMPRESA:
+                    empresaService.readAllEmpresas();
                     empresaService.updateEmpresa();
                     break;
                 case ELIMINAR_EMPRESA:
+                    empresaService.readAllEmpresas();
                     empresaService.deleteEmpresa();
                     break;
                 case MOSTRAR_DEPARTAMENTOS_DE_EMPRESA_Y_EMPLEADOS:
+                    empresaService.readAllEmpresas();
                     empresaService.mostrarDepartamentosYEmpleados();
                     break;
                 case VOLVER:
@@ -98,11 +101,12 @@ public class Menu {
     private EnumMenuEmpresas validarOpcionEmpresas(Scanner sc) {
         System.out.print("Selecciona una opción: ");
         int codigo = leerEntero(sc);
+        sc.nextLine(); //Limpiar Buffer
         return EnumMenuEmpresas.obtenerPorCodigo(codigo);
     }
 
     // Administra la lógica del submenú de departamentos.
-    private void gestionarDepartamentos(Scanner sc, DepartamentoService departamentoService) {
+    private void gestionarDepartamentos(Scanner sc, DepartamentoService departamentoService, EmpresaService empresaService) {
         boolean volver = false;
         while (!volver) {
             EnumMenuDepartamentos.mostrarOpcionesMenu();
@@ -115,6 +119,7 @@ public class Menu {
 
             switch (opcion) {
                 case CREAR_DEPARTAMENTO:
+                    empresaService.readAllEmpresas();
                     departamentoService.createDepartamento();
                     break;
                 case CONSULTAR_ID_DEPARTAMENTO:
@@ -124,15 +129,19 @@ public class Menu {
                     departamentoService.readAllDepartamentos();
                     break;
                 case CONSULTAR_DEPARTAMENTO_DE_EMPRESA:
+                    empresaService.readAllEmpresas();
                     departamentoService.readDepartamentosDeEmpresa();
                     break;
                 case ACTUALIZAR_DEPARTAMENTO:
+                    departamentoService.readAllDepartamentos();
                     departamentoService.updateDepartamento();
                     break;
                 case ELIMINAR_DEPARTAMENTO:
+                    departamentoService.readAllDepartamentos();
                     departamentoService.deleteDepartamento();
                     break;
                 case MOSTRAR_EMPLEADOS_ASIG_DEPARTAMENTO_DE_EMPRESA:
+                    departamentoService.readAllDepartamentos();
                     departamentoService.mostrarEmpleadosDeDepartamento();
                     break;
                 case VOLVER:
@@ -146,11 +155,12 @@ public class Menu {
     private EnumMenuDepartamentos validarOpcionDepartamentos(Scanner sc) {
         System.out.print("Selecciona una opción: ");
         int codigo = leerEntero(sc);
+        sc.nextLine(); //Limpiar Buffer
         return EnumMenuDepartamentos.obtenerPorCodigo(codigo);
     }
 
     // Administra la lógica del submenú de empleados
-    private void gestionarEmpleados(Scanner sc, EmpleadoService empleadoService) {
+    private void gestionarEmpleados(Scanner sc, EmpleadoService empleadoService, DepartamentoService departamentoService) {
         boolean volver = false;
         while (!volver) {
             EnumMenuEmpleados.mostrarOpcionesMenu();
@@ -163,6 +173,7 @@ public class Menu {
 
             switch (opcion) {
                 case CREAR_EMPLEADO:
+                    departamentoService.readAllDepartamentos();
                     empleadoService.createEmpleado();
                     break;
                 case CONSULTAR_ID_EMPLEADO:
@@ -179,6 +190,7 @@ public class Menu {
                     empleadoService.updateEmpleado();
                     break;
                 case ELIMINAR_EMPLEADO:
+                    empleadoService.readAllEmpleados();
                     empleadoService.deleteEmpleado();
                     break;
                 case VOLVER:
@@ -192,6 +204,7 @@ public class Menu {
     private EnumMenuEmpleados validarOpcionEmpleados(Scanner sc) {
         System.out.print("Selecciona una opción: ");
         int codigo = leerEntero(sc);
+        sc.nextLine(); //Limpiar Buffer
         return EnumMenuEmpleados.obtenerPorCodigo(codigo);
     }
 

@@ -15,7 +15,6 @@ public class Departamento {
     @ManyToOne
     @JoinColumn(name = "empresa_id")
     private Empresa empresa;
-
     @OneToMany(mappedBy = "departamento", cascade = CascadeType.ALL)
     private List<Empleado> empleados;
 
@@ -73,6 +72,6 @@ public class Departamento {
 
     @Override
     public String toString() {
-        return "Departamento{" + "id=" + id + ", nombre='" + nombre + '}';
+        return "DEPARTAMENTO --> Id= '" + id + "', Nombre= '" + nombre + "'";
     }
 }

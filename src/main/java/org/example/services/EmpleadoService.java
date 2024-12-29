@@ -21,16 +21,35 @@ public class EmpleadoService {
     }
 
     public void createEmpleado() {
-        System.out.println("Ingrese nombre del empleado: ");
-        String nombreEmp = sc.nextLine();
-        System.out.println("Ingrese apellido del empleado: ");
-        String apellidoEmp = sc.nextLine();
-        System.out.println("Ingrese puesto del empleado: ");
-        String puesto = sc.nextLine();
+        String nombreEmp;
+        String apellidoEmp;
+        String puestoEmp;
+
+        do {
+            System.out.println("Ingrese nombre del empleado: ");
+            nombreEmp = sc.nextLine().trim();
+            if (nombreEmp.isEmpty()) {
+                System.out.println("El nombre no puede estar vacío");
+            }
+        } while (nombreEmp.isEmpty());
+        do {
+            System.out.println("Ingrese apellido del empleado: ");
+            apellidoEmp = sc.nextLine().trim();
+            if (apellidoEmp.isEmpty()) {
+                System.out.println("El apellido no puede estar vacío");
+            }
+        } while (apellidoEmp.isEmpty());
+        do {
+            System.out.println("Ingrese puesto del empleado: ");
+            puestoEmp = sc.nextLine().trim();
+            if (puestoEmp.isEmpty()) {
+                System.out.println("El puesto no puede estar vacío");
+            }
+        } while (puestoEmp.isEmpty());
 
         System.out.println("Ingrese el ID del departamento al que pertenece: ");
         int idDepto = leerEntero();
-        Departamento departamento = deptoRepo.obtenerDepartamentoPorId(idDepto);
+        Departamento departamento = deptoRepo.readDepartamentoPorId(idDepto);
         if (departamento == null) {
             System.out.println("No existe un departamento con ese ID.");
             return;
@@ -39,17 +58,17 @@ public class EmpleadoService {
         Empleado emp = new Empleado();
         emp.setNombre(nombreEmp);
         emp.setApellido(apellidoEmp);
-        emp.setPuesto(puesto);
+        emp.setPuesto(puestoEmp);
         emp.setDepartamento(departamento);
 
-        empleadoRepo.guardarEmpleado(emp);
-        System.out.println("Empleado creado.");
+        empleadoRepo.createEmpleado(emp);
+        System.out.println("Empleado creado!");
     }
 
     public void readEmpleadoById() {
         System.out.println("Ingrese el ID del empleado: ");
         int id = leerEntero();
-        Empleado emp = empleadoRepo.obtenerEmpleadoPorId(id);
+        Empleado emp = empleadoRepo.readEmpleadoPorId(id);
         if (emp == null) {
             System.out.println("No existe un empleado con ese ID.");
         } else {
@@ -58,7 +77,7 @@ public class EmpleadoService {
     }
 
     public void readAllEmpleados() {
-        List<Empleado> empleados = empleadoRepo.obtenerTodosLosEmpleados();
+        List<Empleado> empleados = empleadoRepo.readTodosLosEmpleados();
         if (empleados.isEmpty()) {
             System.out.println("No hay empleados registrados.");
         } else {
@@ -70,7 +89,7 @@ public class EmpleadoService {
     public void readEmpleadosPorDepartamento() {
         System.out.println("Ingrese el ID del departamento: ");
         int idDep = leerEntero();
-        List<Empleado> empleados = empleadoRepo.obtenerEmpleadosPorDepartamento(idDep);
+        List<Empleado> empleados = empleadoRepo.readEmpleadosPorDepartamento(idDep);
         if (empleados.isEmpty()) {
             System.out.println("No hay empleados en este departamento, o no existe.");
         } else {
@@ -82,7 +101,7 @@ public class EmpleadoService {
     public void updateEmpleado() {
         System.out.println("Ingrese el ID del empleado a actualizar: ");
         int id = leerEntero();
-        Empleado emp = empleadoRepo.obtenerEmpleadoPorId(id);
+        Empleado emp = empleadoRepo.readEmpleadoPorId(id);
         if (emp == null) {
             System.out.println("No existe un empleado con ese ID.");
             return;
@@ -94,24 +113,29 @@ public class EmpleadoService {
         System.out.println("Ingrese el nuevo puesto: ");
         String nuevoPuesto = sc.nextLine().trim();
 
-        if(!nuevoNombre.isEmpty()){
+        if (!nuevoNombre.isEmpty()) {
             emp.setNombre(nuevoNombre);
         }
-        if(!nuevoApellido.isEmpty()){
+        if (!nuevoApellido.isEmpty()) {
             emp.setApellido(nuevoApellido);
         }
-        if(!nuevoPuesto.isEmpty()){
+        if (!nuevoPuesto.isEmpty()) {
             emp.setPuesto(nuevoPuesto);
         }
-        empleadoRepo.actualizarEmpleadoPorId(id, emp);
-        System.out.println("Empleado actualizado.");
+        empleadoRepo.updateEmpleadoPorId(id, emp);
+        System.out.println("Empleado actualizado!");
     }
 
     public void deleteEmpleado() {
         System.out.println("Ingrese el ID del empleado a eliminar: ");
         int id = leerEntero();
-        empleadoRepo.eliminarEmpleadoPorId(id);
-        System.out.println("Empleado eliminado (si existía).");
+        Empleado emp = empleadoRepo.readEmpleadoPorId(id);
+        if (emp == null) {
+            System.out.println("No existe un empleado con ese ID.");
+            return;
+        }
+        empleadoRepo.deleteEmpleadoPorId(id);
+        System.out.println("Empleado eliminado!");
     }
 
     public void close() {

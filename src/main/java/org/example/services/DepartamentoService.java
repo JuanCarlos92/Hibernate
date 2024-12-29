@@ -20,13 +20,21 @@ public class DepartamentoService {
         this.empresaRepo = new EmpresaRepository();
     }
 
+    // Crear departamento
     public void createDepartamento() {
-        System.out.println("Ingrese el nombre del departamento: ");
-        String nombreDepto = sc.nextLine();
+        String nombreDepto;
+
+        do {
+            System.out.println("Ingrese el nombre del departamento: ");
+            nombreDepto = sc.nextLine().trim();
+            if (nombreDepto.isEmpty()) {
+                System.out.println("El nombre no puede estar vacío");
+            }
+        } while (nombreDepto.isEmpty());
 
         System.out.println("Ingrese el ID de la empresa a la que pertenece: ");
         int idEmpresa = leerEntero();
-        Empresa empresa = empresaRepo.obtenerEmpresaPorId(idEmpresa);
+        Empresa empresa = empresaRepo.readEmpresaPorId(idEmpresa);
         if (empresa == null) {
             System.out.println("No existe una empresa con ID: " + idEmpresa);
             return;
@@ -36,14 +44,14 @@ public class DepartamentoService {
         depto.setNombre(nombreDepto);
         depto.setEmpresa(empresa);
 
-        deptoRepo.guardarDepartamento(depto);
-        System.out.println("Departamento creado.");
+        deptoRepo.createDepartamento(depto);
+        System.out.println("Departamento creado!");
     }
 
     public void readDepartamentoById() {
         System.out.println("Ingrese el ID del departamento: ");
         int id = leerEntero();
-        Departamento depto = deptoRepo.obtenerDepartamentoPorId(id);
+        Departamento depto = deptoRepo.readDepartamentoPorId(id);
         if (depto == null) {
             System.out.println("No existe un departamento con ese ID.");
         } else {
@@ -52,7 +60,7 @@ public class DepartamentoService {
     }
 
     public void readAllDepartamentos() {
-        List<Departamento> departamentos = deptoRepo.obtenerTodosLosDepartamentos();
+        List<Departamento> departamentos = deptoRepo.readTodosLosDepartamentos();
         if (departamentos.isEmpty()) {
             System.out.println("No hay departamentos registrados.");
         } else {
@@ -64,7 +72,7 @@ public class DepartamentoService {
     public void readDepartamentosDeEmpresa() {
         System.out.println("Ingrese el ID de la empresa: ");
         int idEmpresa = leerEntero();
-        List<Departamento> departamentos = deptoRepo.obtenerDepartamentosPorEmpresa(idEmpresa);
+        List<Departamento> departamentos = deptoRepo.readDepartamentosPorEmpresa(idEmpresa);
         if (departamentos.isEmpty()) {
             System.out.println("La empresa no existe o no tiene departamentos registrados.");
         } else {
@@ -76,23 +84,33 @@ public class DepartamentoService {
     public void updateDepartamento() {
         System.out.println("Ingrese el ID del departamento a actualizar: ");
         int id = leerEntero();
-        Departamento depto = deptoRepo.obtenerDepartamentoPorId(id);
+        Departamento depto = deptoRepo.readDepartamentoPorId(id);
         if (depto == null) {
             System.out.println("No existe un departamento con ese ID.");
             return;
         }
+
         System.out.println("Ingrese el nuevo nombre del departamento: ");
         String nuevoNombre = sc.nextLine();
-        depto.setNombre(nuevoNombre);
-        deptoRepo.actualizarDepartamentoPorId(id, depto);
-        System.out.println("Departamento actualizado.");
+
+        if (!nuevoNombre.isEmpty()) {
+            depto.setNombre(nuevoNombre);
+        }
+
+        deptoRepo.updateDepartamentoPorId(id, depto);
+        System.out.println("Departamento actualizado!");
     }
 
     public void deleteDepartamento() {
         System.out.println("Ingrese el ID del departamento a eliminar: ");
         int id = leerEntero();
-        deptoRepo.eliminarDepartamentoPorId(id);
-        System.out.println("Departamento eliminado (si existía).");
+        Departamento depto = deptoRepo.readDepartamentoPorId(id);
+        if (depto == null) {
+            System.out.println("No existe un departamento con ese ID.");
+            return;
+        }
+        deptoRepo.deleteDepartamentoPorId(id);
+        System.out.println("Departamento eliminado!");
     }
 
     public void mostrarEmpleadosDeDepartamento() {

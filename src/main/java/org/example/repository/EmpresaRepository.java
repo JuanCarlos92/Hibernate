@@ -21,7 +21,7 @@ public class EmpresaRepository {
     }
 
     //Crear una empresa
-    public void guardarEmpresa(Empresa empresa) {
+    public void createEmpresa(Empresa empresa) {
         try (Session session = FACTORY.getCurrentSession()) {
             session.beginTransaction();
             session.saveOrUpdate(empresa);
@@ -32,7 +32,7 @@ public class EmpresaRepository {
     }
 
     //Obtener una empresa por ID
-    public Empresa obtenerEmpresaPorId(int id) {
+    public Empresa readEmpresaPorId(int id) {
         Empresa empresa = null;
         try (Session session = FACTORY.getCurrentSession()) {
             session.beginTransaction();
@@ -45,7 +45,7 @@ public class EmpresaRepository {
     }
 
     //Obtener todas las empresas
-    public List<Empresa> obtenerTodasLasEmpresas() {
+    public List<Empresa> readTodasLasEmpresas() {
         List<Empresa> empresas = null;
         try (Session session = FACTORY.getCurrentSession()) {
             session.beginTransaction();
@@ -58,7 +58,7 @@ public class EmpresaRepository {
     }
 
     //Actualizar empresa por ID
-    public void actualizarEmpresaPorId(int id, Empresa empresa) {
+    public void updateEmpresaPorId(int id, Empresa empresa) {
         try (Session session = FACTORY.getCurrentSession()) {
             session.beginTransaction();
             empresa.setId(id);
@@ -70,7 +70,7 @@ public class EmpresaRepository {
     }
 
     //Eliminar empresa por ID
-    public void eliminarEmpresaPorId(int id) {
+    public void deleteEmpresaPorId(int id) {
         try (Session session = FACTORY.getCurrentSession()) {
             session.beginTransaction();
             Empresa empresa = session.get(Empresa.class, id);
@@ -94,32 +94,32 @@ public class EmpresaRepository {
                 System.out.println("No se encontró la empresa con ID: " + empresaId);
                 return;
             }
-            // Obtiene la lista de departamentos asociados a la empresa
+            // Obtiene la lista de departamentos
             List<Departamento> departamentos = empresa.getDepartamentos();
 
-            // Verifica si la empresa no tiene departamentos
+            // Verifica si tiene departamentos
             if (departamentos == null || departamentos.isEmpty()) {
                 System.out.println("La empresa '" + empresa.getNombre() + "' no tiene departamentos registrados.");
             } else {
                 System.out.println("Departamentos de la empresa: " + empresa.getNombre());
 
-                // Recorre cada departamento
+                // Muestra cada departamento
                 for (Departamento depto : departamentos) {
-                    System.out.println("- Departamento: " + depto.getNombre());
+                    System.out.println("* Departamento: " + depto.getNombre());
 
                     // Lista de empleados en el departamento
                     List<Empleado> empleados = depto.getEmpleados();
 
                     // Verifica si el departamento no tiene empleados
                     if (empleados == null || empleados.isEmpty()) {
-                        System.out.println("  Sin empleados registrados en este departamento.");
+                        System.out.println("    Sin empleados registrados en este departamento.");
                     } else {
-                        System.out.println("  Empleados en el departamento:");
+                        System.out.println(" -> Empleados en el departamento:");
 
                         // Muestra los datos de cada empleado
                         for (Empleado emp : empleados) {
-                            System.out.println("    - " + emp.getNombre() + " " + emp.getApellido() +
-                                    " (Puesto: " + emp.getPuesto() + ")");
+                            System.out.println("    " + emp.getNombre() + " " + emp.getApellido() +
+                                    " [Puesto: " + emp.getPuesto() + "]");
                         }
                     }
                 }

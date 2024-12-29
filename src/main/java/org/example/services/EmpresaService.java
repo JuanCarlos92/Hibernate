@@ -6,8 +6,7 @@ import org.example.repository.EmpresaRepository;
 import java.util.List;
 import java.util.Scanner;
 
-//Clase que encapsula la lógica de negocio para la entidad {@link Empresa}.
-
+// Clase que encapsula la lógica de negocio para la entidad Empresa.
 public class EmpresaService {
 
     private final EmpresaRepository empresaRepo;
@@ -19,23 +18,36 @@ public class EmpresaService {
     }
 
     public void createEmpresa() {
-        System.out.println("Ingrese nombre de la empresa: ");
-        String nombre = sc.nextLine();
-        System.out.println("Ingrese industria de la empresa: ");
-        String industria = sc.nextLine();
+        String nombre;
+        String industria;
+
+        do {
+            System.out.println("Ingrese nombre de la empresa: ");
+            nombre = sc.nextLine().trim();
+            if (nombre.isEmpty()) {
+                System.out.println("No se puede dejar el nombre vacía.");
+            }
+        } while (nombre.isEmpty());
+        do {
+            System.out.println("Ingrese industria de la empresa: ");
+            industria = sc.nextLine().trim();
+            if (industria.isEmpty()) {
+                System.out.println("No se puede dejar la industria vacía.");
+            }
+        } while (industria.isEmpty());
 
         Empresa nuevaEmpresa = new Empresa();
         nuevaEmpresa.setNombre(nombre);
         nuevaEmpresa.setIndustria(industria);
 
-        empresaRepo.guardarEmpresa(nuevaEmpresa);
-        System.out.println("Empresa creada.");
+        empresaRepo.createEmpresa(nuevaEmpresa);
+        System.out.println("Empresa creada!");
     }
 
     public void readEmpresaById() {
         System.out.println("Ingrese el ID de la empresa: ");
         int id = leerEntero();
-        Empresa empresa = empresaRepo.obtenerEmpresaPorId(id);
+        Empresa empresa = empresaRepo.readEmpresaPorId(id);
         if (empresa != null) {
             System.out.println("Empresa: " + empresa);
         } else {
@@ -44,7 +56,7 @@ public class EmpresaService {
     }
 
     public void readAllEmpresas() {
-        List<Empresa> empresas = empresaRepo.obtenerTodasLasEmpresas();
+        List<Empresa> empresas = empresaRepo.readTodasLasEmpresas();
         if (empresas.isEmpty()) {
             System.out.println("No hay empresas registradas.");
         } else {
@@ -56,7 +68,7 @@ public class EmpresaService {
     public void updateEmpresa() {
         System.out.println("Ingrese el ID de la empresa a actualizar: ");
         int id = leerEntero();
-        Empresa empresa = empresaRepo.obtenerEmpresaPorId(id);
+        Empresa empresa = empresaRepo.readEmpresaPorId(id);
         if (empresa == null) {
             System.out.println("No existe una empresa con ese ID.");
             return;
@@ -66,17 +78,27 @@ public class EmpresaService {
         System.out.println("Ingrese la nueva industria: ");
         String nuevaIndustria = sc.nextLine();
 
-        empresa.setNombre(nuevoNombre);
-        empresa.setIndustria(nuevaIndustria);
-        empresaRepo.actualizarEmpresaPorId(id, empresa);
+        if (!nuevoNombre.isEmpty()) {
+            empresa.setNombre(nuevoNombre);
+        }
+        if (!nuevaIndustria.isEmpty()) {
+            empresa.setIndustria(nuevaIndustria);
+        }
+
+        empresaRepo.updateEmpresaPorId(id, empresa);
         System.out.println("Empresa actualizada!.");
     }
 
     public void deleteEmpresa() {
         System.out.println("Ingrese el ID de la empresa a eliminar: ");
         int id = leerEntero();
-        empresaRepo.eliminarEmpresaPorId(id);
-        System.out.println("Empresa eliminada!.");
+        Empresa empresa = empresaRepo.readEmpresaPorId(id);
+        if (empresa == null) {
+            System.out.println("No existe una empresa con ese ID.");
+            return;
+        }
+        empresaRepo.deleteEmpresaPorId(id);
+        System.out.println("Empresa eliminada!");
     }
 
     public void mostrarDepartamentosYEmpleados() {

@@ -8,7 +8,6 @@ import java.util.List;
 public class Empresa {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
     private int id;
     @Column(name = "nombre", nullable = false)
     private String nombre;
@@ -74,7 +73,7 @@ public class Empresa {
 
     @Override
     public String toString() {
-        return "Empleado{" + "id=" + id + ", nombre='" + nombre + '\'' + ", industria='" + industria + '\'' + '}';
+        return "EMPRESA --> " + "Id= '" + id + "', Nombre= '" + nombre + "', Industria= '" + industria + "'";
     }
 }
 

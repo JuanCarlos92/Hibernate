@@ -23,7 +23,7 @@ public class DepartamentoRepository {
     }
 
     //Crea un Departamento
-    public void guardarDepartamento(Departamento departamento) {
+    public void createDepartamento(Departamento departamento) {
         try (Session session = FACTORY.getCurrentSession()) {
             session.beginTransaction();
             session.saveOrUpdate(departamento);
@@ -34,7 +34,7 @@ public class DepartamentoRepository {
     }
 
     //Obtiene un departamento por ID
-    public Departamento obtenerDepartamentoPorId(int id) {
+    public Departamento readDepartamentoPorId(int id) {
         Departamento departamento = null;
         try (Session session = FACTORY.getCurrentSession()) {
             session.beginTransaction();
@@ -47,7 +47,7 @@ public class DepartamentoRepository {
     }
 
     //Obtiene todos los departamentos
-    public List<Departamento> obtenerTodosLosDepartamentos() {
+    public List<Departamento> readTodosLosDepartamentos() {
         List<Departamento> departamentos = null;
         try (Session session = FACTORY.getCurrentSession()) {
             session.beginTransaction();
@@ -60,7 +60,7 @@ public class DepartamentoRepository {
     }
 
     //Obtiene departamentos de una empresa.
-    public List<Departamento> obtenerDepartamentosPorEmpresa(int empresaId) {
+    public List<Departamento> readDepartamentosPorEmpresa(int empresaId) {
         List<Departamento> departamentos = null;
         try (Session session = FACTORY.getCurrentSession()) {
             session.beginTransaction();
@@ -76,7 +76,7 @@ public class DepartamentoRepository {
     }
 
     //Actualiza un departamento por ID
-    public void actualizarDepartamentoPorId(int id, Departamento departamento) {
+    public void updateDepartamentoPorId(int id, Departamento departamento) {
         try (Session session = FACTORY.getCurrentSession()) {
             session.beginTransaction();
             departamento.setId(id);
@@ -88,7 +88,7 @@ public class DepartamentoRepository {
     }
 
     //Elimina un departamento por ID
-    public void eliminarDepartamentoPorId(int id) {
+    public void deleteDepartamentoPorId(int id) {
         try (Session session = FACTORY.getCurrentSession()) {
             session.beginTransaction();
             Departamento departamento = session.get(Departamento.class, id);
@@ -122,7 +122,7 @@ public class DepartamentoRepository {
                 System.out.println("Empleados en el departamento: " + departamento.getNombre());
                 for (Empleado emp : empleados) {
                     System.out.println("- " + emp.getNombre() + " " + emp.getApellido()
-                            + " (Puesto: " + emp.getPuesto() + ")");
+                            + " [Puesto: " + emp.getPuesto() + "]");
                 }
             }
 

@@ -23,7 +23,7 @@ public class EmpleadoRepository {
     }
 
     //Crea un empleado
-    public void guardarEmpleado(Empleado empleado) {
+    public void createEmpleado(Empleado empleado) {
         try (Session session = FACTORY.getCurrentSession()) {
             session.beginTransaction();
             session.saveOrUpdate(empleado);
@@ -34,7 +34,7 @@ public class EmpleadoRepository {
     }
 
     //Obtiene un empleado por ID
-    public Empleado obtenerEmpleadoPorId(int id) {
+    public Empleado readEmpleadoPorId(int id) {
         Empleado empleado = null;
         try (Session session = FACTORY.getCurrentSession()) {
             session.beginTransaction();
@@ -47,7 +47,7 @@ public class EmpleadoRepository {
     }
 
     //Obtiene todos los empleados
-    public List<Empleado> obtenerTodosLosEmpleados() {
+    public List<Empleado> readTodosLosEmpleados() {
         List<Empleado> empleados = null;
         try (Session session = FACTORY.getCurrentSession()) {
             session.beginTransaction();
@@ -60,7 +60,7 @@ public class EmpleadoRepository {
     }
 
     //Obtiene empleados de un departamento.
-    public List<Empleado> obtenerEmpleadosPorDepartamento(int departamentoId) {
+    public List<Empleado> readEmpleadosPorDepartamento(int departamentoId) {
         List<Empleado> empleados = null;
         try (Session session = FACTORY.getCurrentSession()) {
             session.beginTransaction();
@@ -76,7 +76,7 @@ public class EmpleadoRepository {
     }
 
     //Actualiza un empleado por ID
-    public void actualizarEmpleadoPorId(int id, Empleado empleado) {
+    public void updateEmpleadoPorId(int id, Empleado empleado) {
         try (Session session = FACTORY.getCurrentSession()) {
             session.beginTransaction();
             empleado.setId(id);
@@ -88,7 +88,7 @@ public class EmpleadoRepository {
     }
 
     //Elimina un empleado por ID
-    public void eliminarEmpleadoPorId(int id) {
+    public void deleteEmpleadoPorId(int id) {
         try (Session session = FACTORY.getCurrentSession()) {
             session.beginTransaction();
             Empleado empleado = session.get(Empleado.class, id);
