@@ -1,8 +1,9 @@
-package org.example.repository;
+package org.juancarlos.repository;
 
-import org.example.models.Departamento;
-import org.example.models.Empleado;
-import org.example.models.Empresa;
+import org.juancarlos.models.Departamento;
+import org.juancarlos.models.Empleado;
+import org.juancarlos.models.Empresa;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -25,9 +26,9 @@ public class DepartamentoRepository {
     //Crea un Departamento
     public void createDepartamento(Departamento departamento) {
         try (Session session = FACTORY.getCurrentSession()) {
-            session.beginTransaction();
-            session.saveOrUpdate(departamento);
-            session.getTransaction().commit();
+            session.beginTransaction(); // Inicia la transacción.
+            session.saveOrUpdate(departamento); // Usa saveOrUpdate para insertar o actualizar.
+            session.getTransaction().commit(); // Confirma los cambios en la BD.
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
@@ -37,9 +38,9 @@ public class DepartamentoRepository {
     public Departamento readDepartamentoPorId(int id) {
         Departamento departamento = null;
         try (Session session = FACTORY.getCurrentSession()) {
-            session.beginTransaction();
-            departamento = session.get(Departamento.class, id);
-            session.getTransaction().commit();
+            session.beginTransaction(); // Inicia la transacción.
+            departamento = session.get(Departamento.class, id); // Obtiene el depart mediante el ID
+            session.getTransaction().commit(); // Corfirma los cambios en la BD
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
@@ -50,9 +51,9 @@ public class DepartamentoRepository {
     public List<Departamento> readTodosLosDepartamentos() {
         List<Departamento> departamentos = null;
         try (Session session = FACTORY.getCurrentSession()) {
-            session.beginTransaction();
-            departamentos = session.createQuery("FROM Departamento", Departamento.class).getResultList();
-            session.getTransaction().commit();
+            session.beginTransaction(); // Inicia la transacción.
+            departamentos = session.createQuery("FROM Departamento", Departamento.class).getResultList(); // Consulta obtener todos los depart.
+            session.getTransaction().commit(); // Corfirma los cambios en la BD
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
@@ -63,12 +64,15 @@ public class DepartamentoRepository {
     public List<Departamento> readDepartamentosPorEmpresa(int empresaId) {
         List<Departamento> departamentos = null;
         try (Session session = FACTORY.getCurrentSession()) {
-            session.beginTransaction();
+            session.beginTransaction(); // Inicia la transacción.
+
+            // Consulta obtener todos los depart de una empresa
             departamentos = session.createQuery(
                             "FROM Departamento d WHERE d.empresa.id = :empId", Departamento.class)
                     .setParameter("empId", empresaId)
                     .getResultList();
-            session.getTransaction().commit();
+
+            session.getTransaction().commit(); // Corfirma los cambios en la BD
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
@@ -78,10 +82,10 @@ public class DepartamentoRepository {
     //Actualiza un departamento por ID
     public void updateDepartamentoPorId(int id, Departamento departamento) {
         try (Session session = FACTORY.getCurrentSession()) {
-            session.beginTransaction();
-            departamento.setId(id);
-            session.update(departamento);
-            session.getTransaction().commit();
+            session.beginTransaction(); // Inicia la transacción.
+            departamento.setId(id); // Indicamos el id del depart
+            session.update(departamento); // Actualiza el depart con ese id
+            session.getTransaction().commit(); // Corfirma los cambios en la BD
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
@@ -102,34 +106,22 @@ public class DepartamentoRepository {
     }
 
     //Muestra todos los empleados asignados a un departamento.
-    public void mostrarEmpleadosDeDepartamento(int departamentoId) {
+    public Departamento obtenerDepartamentoConEmpleados(int departamentoId) {
+        Departamento departamento = null;
         try (Session session = FACTORY.getCurrentSession()) {
-            session.beginTransaction();
+            session.beginTransaction(); // Inicia la transacción.
+            departamento = session.get(Departamento.class, departamentoId); // Obtiene el depart mediante el ID.
 
-            // Obtenemos el departamento por ID
-            Departamento departamento = session.get(Departamento.class, departamentoId);
-            if (departamento == null) {
-                System.out.println("No se encontró el departamento con ID: " + departamentoId);
-                return;
+            // Si no es null, forzamos la inicialización.
+            if (departamento != null) {
+                Hibernate.initialize(departamento.getEmpleados());
             }
 
-            // Obtenemos los empleados del departamento
-            List<Empleado> empleados = departamento.getEmpleados();
-            if (empleados == null || empleados.isEmpty()) {
-                System.out.println("El departamento '" + departamento.getNombre()
-                        + "' no tiene empleados registrados.");
-            } else {
-                System.out.println("Empleados en el departamento: " + departamento.getNombre());
-                for (Empleado emp : empleados) {
-                    System.out.println("- " + emp.getNombre() + " " + emp.getApellido()
-                            + " [Puesto: " + emp.getPuesto() + "]");
-                }
-            }
-
-            session.getTransaction().commit();
+            session.getTransaction().commit(); // Corfirma los cambios en la BD
         } catch (Exception e) {
-            System.out.println("Error al mostrar empleados del departamento: " + e.getMessage());
+            System.out.println("Error al obtener el departamento con empleados: " + e.getMessage());
         }
+        return departamento;
     }
 
     public void cerrar() {

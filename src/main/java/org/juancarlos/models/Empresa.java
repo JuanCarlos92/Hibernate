@@ -1,4 +1,4 @@
-package org.example.models;
+package org.juancarlos.models;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -14,6 +14,8 @@ public class Empresa {
     @Column(name = "industria", nullable = false)
     private String industria;
 
+    // Relación Uno a Muchos con la entidad Departamento:
+    // - Una Empresa puede tener muchos Departamentos.
     @OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL)
     private List<Departamento> departamentos;
 

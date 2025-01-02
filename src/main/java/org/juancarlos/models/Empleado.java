@@ -1,4 +1,4 @@
-package org.example.models;
+package org.juancarlos.models;
 
 import javax.persistence.*;
 

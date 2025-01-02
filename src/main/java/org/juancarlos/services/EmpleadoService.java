@@ -1,9 +1,9 @@
-package org.example.services;
+package org.juancarlos.services;
 
-import org.example.models.Departamento;
-import org.example.models.Empleado;
-import org.example.repository.DepartamentoRepository;
-import org.example.repository.EmpleadoRepository;
+import org.juancarlos.models.Departamento;
+import org.juancarlos.models.Empleado;
+import org.juancarlos.repository.DepartamentoRepository;
+import org.juancarlos.repository.EmpleadoRepository;
 
 import java.util.List;
 import java.util.Scanner;

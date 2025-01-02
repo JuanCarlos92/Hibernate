@@ -1,4 +1,4 @@
-package org.example.models;
+package org.juancarlos.models;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,9 +12,14 @@ public class Departamento {
     @Column(name = "nombre", nullable = false)
     private String nombre;
 
+    // Relación Muchos a Uno con la entidad empresa:
+    // - Un Departamento pertenece a una sola Empresa.
     @ManyToOne
     @JoinColumn(name = "empresa_id")
     private Empresa empresa;
+
+    // Relación Uno a Muchos con la entidad empleado:
+    // - Un Departamento puede tener muchos Empleados.
     @OneToMany(mappedBy = "departamento", cascade = CascadeType.ALL)
     private List<Empleado> empleados;
 

@@ -1,8 +1,8 @@
-package org.example.menu;
+package org.juancarlos.menu;
 
-import org.example.services.DepartamentoService;
-import org.example.services.EmpleadoService;
-import org.example.services.EmpresaService;
+import org.juancarlos.services.DepartamentoService;
+import org.juancarlos.services.EmpleadoService;
+import org.juancarlos.services.EmpresaService;
 
 import java.util.Scanner;
 

@@ -1,8 +1,8 @@
-package org.example.repository;
+package org.juancarlos.repository;
 
-import org.example.models.Departamento;
-import org.example.models.Empleado;
-import org.example.models.Empresa;
+import org.juancarlos.models.Departamento;
+import org.juancarlos.models.Empleado;
+import org.juancarlos.models.Empresa;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -25,9 +25,9 @@ public class EmpleadoRepository {
     //Crea un empleado
     public void createEmpleado(Empleado empleado) {
         try (Session session = FACTORY.getCurrentSession()) {
-            session.beginTransaction();
-            session.saveOrUpdate(empleado);
-            session.getTransaction().commit();
+            session.beginTransaction(); // Inicia la transacción.
+            session.saveOrUpdate(empleado); // Usa saveOrUpdate para insertar o actualizar.
+            session.getTransaction().commit(); // Confirma los cambios en la BD.
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
@@ -37,9 +37,9 @@ public class EmpleadoRepository {
     public Empleado readEmpleadoPorId(int id) {
         Empleado empleado = null;
         try (Session session = FACTORY.getCurrentSession()) {
-            session.beginTransaction();
-            empleado = session.get(Empleado.class, id);
-            session.getTransaction().commit();
+            session.beginTransaction(); // Inicia la transacción.
+            empleado = session.get(Empleado.class, id); // Obtiene el empleado mediante el ID
+            session.getTransaction().commit(); // Corfirma los cambios en la BD
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
@@ -50,9 +50,9 @@ public class EmpleadoRepository {
     public List<Empleado> readTodosLosEmpleados() {
         List<Empleado> empleados = null;
         try (Session session = FACTORY.getCurrentSession()) {
-            session.beginTransaction();
-            empleados = session.createQuery("FROM Empleado", Empleado.class).getResultList();
-            session.getTransaction().commit();
+            session.beginTransaction(); // Inicia la transacción.
+            empleados = session.createQuery("FROM Empleado", Empleado.class).getResultList(); // Consulta obtener todos los empleados.
+            session.getTransaction().commit(); // Corfirma los cambios en la BD
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
@@ -63,12 +63,15 @@ public class EmpleadoRepository {
     public List<Empleado> readEmpleadosPorDepartamento(int departamentoId) {
         List<Empleado> empleados = null;
         try (Session session = FACTORY.getCurrentSession()) {
-            session.beginTransaction();
+            session.beginTransaction(); // Inicia la transacción.
+
+            // Consulta obtener todos los empleados de un depart
             empleados = session.createQuery(
                             "FROM Empleado e WHERE e.departamento.id = :depId", Empleado.class)
                     .setParameter("depId", departamentoId)
                     .getResultList();
-            session.getTransaction().commit();
+
+            session.getTransaction().commit(); // Corfirma los cambios en la BD
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
@@ -78,10 +81,10 @@ public class EmpleadoRepository {
     //Actualiza un empleado por ID
     public void updateEmpleadoPorId(int id, Empleado empleado) {
         try (Session session = FACTORY.getCurrentSession()) {
-            session.beginTransaction();
-            empleado.setId(id);
-            session.update(empleado);
-            session.getTransaction().commit();
+            session.beginTransaction(); // Inicia la transacción.
+            empleado.setId(id); // Indicamos el id del empleado
+            session.update(empleado); // Actualiza el empleado con ese id
+            session.getTransaction().commit(); // Corfirma los cambios en la BD
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
@@ -90,12 +93,12 @@ public class EmpleadoRepository {
     //Elimina un empleado por ID
     public void deleteEmpleadoPorId(int id) {
         try (Session session = FACTORY.getCurrentSession()) {
-            session.beginTransaction();
-            Empleado empleado = session.get(Empleado.class, id);
-            if (empleado != null) {
+            session.beginTransaction(); // Inicia la transacción.
+            Empleado empleado = session.get(Empleado.class, id); // Obtiene el empleado mediante el ID
+            if (empleado != null) { // Si no es  null > Elimina
                 session.delete(empleado);
             }
-            session.getTransaction().commit();
+            session.getTransaction().commit(); // Corfirma los cambios en la BD
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }

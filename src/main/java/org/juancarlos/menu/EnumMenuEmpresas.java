@@ -1,4 +1,4 @@
-package org.example.menu;
+package org.juancarlos.menu;
 
 /**
  * Esta enumeración representa las diferentes opciones de un menú principal.

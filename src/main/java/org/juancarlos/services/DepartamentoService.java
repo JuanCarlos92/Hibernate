@@ -1,9 +1,10 @@
-package org.example.services;
+package org.juancarlos.services;
 
-import org.example.models.Departamento;
-import org.example.models.Empresa;
-import org.example.repository.DepartamentoRepository;
-import org.example.repository.EmpresaRepository;
+import org.juancarlos.models.Departamento;
+import org.juancarlos.models.Empleado;
+import org.juancarlos.models.Empresa;
+import org.juancarlos.repository.DepartamentoRepository;
+import org.juancarlos.repository.EmpresaRepository;
 
 import java.util.List;
 import java.util.Scanner;
@@ -116,7 +117,30 @@ public class DepartamentoService {
     public void mostrarEmpleadosDeDepartamento() {
         System.out.println("Ingrese el ID del departamento: ");
         int id = leerEntero();
-        deptoRepo.mostrarEmpleadosDeDepartamento(id);
+
+        // Obtenemos el departamento con sus empleados
+        Departamento departamento = deptoRepo.obtenerDepartamentoConEmpleados(id);
+
+        // Validación básica
+        if (departamento == null) {
+            System.out.println("No se encontró el departamento con ID: " + id);
+            return;
+        }
+
+        // Obtenemos la lista de empleados
+        List<Empleado> empleados = departamento.getEmpleados();
+
+        // Verificamos si la lista está vacía o es null
+        if (empleados == null || empleados.isEmpty()) {
+            System.out.println("El departamento '" + departamento.getNombre()
+                    + "' no tiene empleados registrados.");
+        } else {
+            System.out.println("Empleados en el departamento: " + departamento.getNombre());
+            for (Empleado emp : empleados) {
+                System.out.println("- " + emp.getNombre() + " " + emp.getApellido()
+                        + " [Puesto: " + emp.getPuesto() + "]");
+            }
+        }
     }
 
     public void close() {

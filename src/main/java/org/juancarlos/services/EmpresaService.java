@@ -1,7 +1,9 @@
-package org.example.services;
+package org.juancarlos.services;
 
-import org.example.models.Empresa;
-import org.example.repository.EmpresaRepository;
+import org.juancarlos.models.Departamento;
+import org.juancarlos.models.Empleado;
+import org.juancarlos.models.Empresa;
+import org.juancarlos.repository.EmpresaRepository;
 
 import java.util.List;
 import java.util.Scanner;
@@ -104,7 +106,41 @@ public class EmpresaService {
     public void mostrarDepartamentosYEmpleados() {
         System.out.println("Ingrese el ID de la empresa: ");
         int id = leerEntero();
-        empresaRepo.mostrarDepartamentosYEmpleados(id);
+
+        // Obtenemos la empresa con sus departamentos y empleados.
+        Empresa empresa = empresaRepo.obtenerEmpresaConDepartamentosYEmpleados(id);
+
+        if (empresa == null) {
+            System.out.println("No se encontró la empresa con ID: " + id);
+            return;
+        }
+
+        //Lista <Departamentos> que recoge todos los departamentos
+        List<Departamento> departamentos = empresa.getDepartamentos();
+
+        if (departamentos == null || departamentos.isEmpty()) {
+            System.out.println("La empresa '" + empresa.getNombre() + "' no tiene departamentos registrados.");
+
+        } else {
+            //Muestra los departamentos de la empresa
+            System.out.println("Departamentos de la empresa: " + empresa.getNombre());
+            for (Departamento depto : departamentos) {
+                System.out.println("* Departamento: " + depto.getNombre());
+
+                //Lista <Empleado> que recoge todos los empleados del departamento
+                List<Empleado> empleados = depto.getEmpleados();
+                if (empleados == null || empleados.isEmpty()) {
+                    System.out.println("    Sin empleados registrados en este departamento.");
+                } else {
+                    //Muestra los empleados del departamento
+                    System.out.println(" -> Empleados en el departamento:");
+                    for (Empleado emp : empleados) {
+                        System.out.println("    " + emp.getNombre() + " " + emp.getApellido() +
+                                " [Puesto: " + emp.getPuesto() + "]");
+                    }
+                }
+            }
+        }
     }
 
     public void close() {
