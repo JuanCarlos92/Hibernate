@@ -14,7 +14,11 @@ public class EmpresaRepository {
     private final SessionFactory FACTORY;
 
     public EmpresaRepository() {
-        FACTORY = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Empresa.class).addAnnotatedClass(Departamento.class).addAnnotatedClass(Empleado.class).buildSessionFactory();
+        FACTORY = new Configuration().configure("hibernate.cfg.xml")
+                .addAnnotatedClass(Empresa.class)
+                .addAnnotatedClass(Departamento.class)
+                .addAnnotatedClass(Empleado.class)
+                .buildSessionFactory();
     }
 
     //Crear una empresa
