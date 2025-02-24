@@ -6,7 +6,7 @@ Desarrollar una aplicación Java que gestione empresas, sus departamentos y los 
 ## Tecnologías Utilizadas
 - Java
 - Hibernate
-- MySQL / H2
+- MySQL
 - Maven
 
 ## Requisitos del Ejercicio
